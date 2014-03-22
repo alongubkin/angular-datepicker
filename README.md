@@ -8,7 +8,7 @@ This is basically a [pickadate.js](https://github.com/amsul/pickadate.js) fork t
 
 ### Usage
 
-Include build/angular-datepicker.js in your application.
+Include `build/angular-datepicker.js` in your application:
 
     <script src="angular-datepicker.js"></script>
     
@@ -16,7 +16,7 @@ Add the module `angular-datepicker` as a dependency to your app module:
 
     var myapp = angular.module('myapp', ['angular-datepicker']);
     
-Add the `pick-a-date` or `pick-a-time` directive to your input tag:
+To create a date or a time picker, add the `pick-a-date` or `pick-a-time` directive to your input tag:
 
     <input type="text" pick-a-date="date" placeholder="Select Date" /> {{ date }}
     <input type="text" pick-a-time="time" placeholder="Select Time" /> {{ time }}
