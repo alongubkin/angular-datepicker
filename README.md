@@ -8,5 +8,5 @@ This is basically a [pickadate.js](https://github.com/amsul/pickadate.js) fork t
 
 #### Usage
 
-<input type="text" pick-a-date="date" placeholder="Select Date" /> {{ date }}
-<input type="text" pick-a-date="time" placeholder="Select Time" /> {{ time }}
+    <input type="text" pick-a-date="date" placeholder="Select Date" /> {{ date }}
+    <input type="text" pick-a-date="time" placeholder="Select Time" /> {{ time }}
