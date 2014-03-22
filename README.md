@@ -8,5 +8,7 @@ This is basically a [pickadate.js](https://github.com/amsul/pickadate.js) fork t
 
 #### Usage
 
+Just add the `pick-a-date` or `pick-a-time` attribute to your input:
+
     <input type="text" pick-a-date="date" placeholder="Select Date" /> {{ date }}
     <input type="text" pick-a-time="time" placeholder="Select Time" /> {{ time }}
