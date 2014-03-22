@@ -16,7 +16,7 @@ Add the module `angular-datepicker` as a dependency to your app module:
 
     var myapp = angular.module('myapp', ['angular-datepicker']);
     
-Just add the `pick-a-date` or `pick-a-time` directive to your input tag:
+Add the `pick-a-date` or `pick-a-time` directive to your input tag:
 
     <input type="text" pick-a-date="date" placeholder="Select Date" /> {{ date }}
     <input type="text" pick-a-time="time" placeholder="Select Time" /> {{ time }}
