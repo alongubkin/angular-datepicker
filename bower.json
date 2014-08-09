@@ -1,0 +1,6 @@
+{
+  "name": "angular-native-datepicker",
+  "dependencies": {
+    "angular": "latest"
+  }
+}
