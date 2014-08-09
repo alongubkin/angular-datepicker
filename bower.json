@@ -1,0 +1,6 @@
+{
+  "name": "angular-dateicker",
+  "dependencies": {
+    "angular": "latest"
+  }
+}
