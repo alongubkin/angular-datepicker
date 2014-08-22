@@ -8,7 +8,7 @@ This is basically a [pickadate.js](https://github.com/amsul/pickadate.js) fork t
 
 ### Bower
 
-`bower install angular-native-datepicker`
+`bower install angular-native-picker`
 
 ### Usage
 
