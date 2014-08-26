@@ -1,5 +1,16 @@
 {
   "name": "angular-native-datepicker",
+  "version": "1.0.1",
+  "main": [
+  	"./build/themes/default.css",
+  	"./build/themes/default.date.css",
+  	"./build/themes/default.time.css",
+  	"./build/angular-datepicker.js"
+  ],
+  "ignore": [
+  	"CONTRIBUTING.md",
+  	"Gruntfile.js"
+  ],
   "dependencies": {
     "angular": "latest"
   }
