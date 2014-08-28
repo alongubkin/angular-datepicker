@@ -20,7 +20,7 @@ angular.module('angular-datepicker', [])
 	                            scope.pickADate = null;
 	                            return;
 	                        }
-	                        if (!scope.pickADate)
+	                        if (!scope.pickADate || typeof scope.pickADate === 'string')
 	                            scope.pickADate = new Date(0);
 	                        scope.pickADate.setYear(select.obj.getYear() + 1900); // hello Y2K...
 	                        // It took me half a day to figure out that javascript Date object's getYear
@@ -32,9 +32,29 @@ angular.module('angular-datepicker', [])
 	                    });
 	                },
 	                onClose: function () {
-	                    element[0].blur();
-	                }
+						if (!cordova || !cordova.plugins || !cordova.plugins.Keyboard) {
+							return;
+						}
+
+						var keyboardShowCallback = function () {
+							cordova.plugins.Keyboard.close();
+							window.removeEventListener('native.keyboardshow', this);
+						};
+
+						window.addEventListener('native.keyboardshow', keyboardShowCallback);
+
+						setTimeout(function () {
+							window.removeEventListener('native.keyboardshow', keyboardShowCallback);
+						}, 500);
+	                },
+					container: document.body
 	            });
+
+				setTimeout(function() {
+					if (scope.pickADate) {
+						element.pickadate('picker').set('select', scope.pickADate);
+					}
+				}, 1000);
 	        }
 	    };
 	})
@@ -55,11 +75,9 @@ angular.module('angular-datepicker', [])
 	                            scope.pickATime = null;
 	                            return;
 	                        }
-	                        if (!scope.pickATime)
+	                        if (!scope.pickATime || typeof scope.pickATime === 'string')
 	                            scope.pickATime = new Date();
-	                        // (attrs.setUtc)
-	                            // ? scope.pickATime.setUTCHours(select.hour)
-	                            // : scope.pickATime.setHours(select.hour);
+
 	                        scope.pickATime.setHours(select.hour);
 	                        scope.pickATime.setMinutes(select.mins);
 	                        scope.pickATime.setSeconds(0);
@@ -67,9 +85,29 @@ angular.module('angular-datepicker', [])
 	                    });
 	                },
 	                onClose: function () {
-	                    element[0].blur();
-	                }
+						if (!cordova || !cordova.plugins || !cordova.plugins.Keyboard) {
+							return;
+						}
+						
+						var keyboardShowCallback = function () {
+							cordova.plugins.Keyboard.close();
+							window.removeEventListener('native.keyboardshow', this);
+						};
+
+						window.addEventListener('native.keyboardshow', keyboardShowCallback);
+						
+						setTimeout(function () {
+							window.removeEventListener('native.keyboardshow', keyboardShowCallback);
+						}, 500);
+	                },
+					container: document.body
 	            });
+
+				setTimeout(function() {
+					if (scope.pickATime) {
+						element.pickatime('picker').set('select', scope.pickATime);
+					}
+				}, 1000);
 	        }
 	    };
 	});	

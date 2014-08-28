@@ -206,6 +206,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 // If it’s already open, do nothing.
                 if ( STATE.open ) return P
 
+
                 // Add the “active” class.
                 $ELEMENT.addClass( CLASSES.active )
                 aria( ELEMENT, 'expanded', true )
@@ -225,8 +226,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
                     // Bind the document events.
 					angular.element(document.querySelectorAll('#' + STATE.id)).on('click focusin', function( event ) {
-
-                        var target = event.target
+                        var target = event.target;
 
                         // If the target of the event is not the element, close the picker picker.
                         // * Don’t worry about clicks or focusins on the root because those don’t bubble up.
@@ -325,7 +325,9 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 if ( !STATE.open ) return P
 
                 // Set it as closed.
-                STATE.open = false
+                setTimeout(function () {
+                    STATE.open = false;
+                }, 1000);
 
                 // Unbind the document events.
                 $document.off( '.' + STATE.id )
@@ -631,7 +633,6 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
         function attachLiveEvents() {
 			// If there’s a click on an actionable element, carry out the actions.
 			angular.element(P.$root[0].querySelectorAll('[data-pick], [data-nav], [data-clear]')).on('click', function() {
-
 				var $target = angular.element( this ),
 					targetDisabled = $target.hasClass( CLASSES.navDisabled ) || $target.hasClass( CLASSES.disabled ),
 
@@ -653,7 +654,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
 				// If something is picked, set `select` then close with focus.
 				else if ( PickerConstructor._.isInteger( parseInt($target.attr('data-pick')) ) && !targetDisabled ) {
-					P.set( 'select', parseInt($target.attr('data-pick')) ).close( true )
+                    P.set( 'select', parseInt($target.attr('data-pick')) ).close( true )
 					attachLiveEvents();
 				}
 
@@ -717,6 +718,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
     // Separated for IE
     function focusToOpen( event ) {
+
         // Stop the event from propagating to the doc.
         event.stopPropagation()
 
