@@ -6,11 +6,12 @@ angular.module('angular-datepicker', [])
 	        restrict: "A",
 	        scope: {
 	            pickADate: '=',
-	            minDate: '=',
-	            maxDate: '='
+	            pickADateOptions: '='
 	        },
 	        link: function (scope, element, attrs) {
-	            element.pickadate({
+	            var options = scope.pickADateOptions || {};
+
+	            element.pickadate(angular.extend(options, {
 	                onSet: function (e) {
 	                    if (scope.$$phase || scope.$root.$$phase) // we are coming from $watch or link setup
 	                        return;
@@ -48,7 +49,7 @@ angular.module('angular-datepicker', [])
 						}, 500);
 	                },
 					container: document.body
-	            });
+	            }));
 
 				setTimeout(function() {
 					if (scope.pickADate) {
@@ -62,10 +63,13 @@ angular.module('angular-datepicker', [])
 	    return {
 	        restrict: "A",
 	        scope: {
-	            pickATime: '='
+	            pickATime: '=',
+	            pickATimeOptions: '='
 	        },
 	        link: function (scope, element, attrs) {
-	            element.pickatime({
+	            var options = scope.pickADateOptions || {};
+
+	            element.pickatime(angular.extend(options, {
 	                onSet: function (e) {
 	                    if (scope.$$phase || scope.$root.$$phase) // we are coming from $watch or link setup
 	                        return;
@@ -101,7 +105,7 @@ angular.module('angular-datepicker', [])
 						}, 500);
 	                },
 					container: document.body
-	            });
+	            }));
 
 				setTimeout(function() {
 					if (scope.pickATime) {
