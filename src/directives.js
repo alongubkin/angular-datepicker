@@ -32,7 +32,7 @@ angular.module('angular-datepicker', [])
 	                    });
 	                },
 	                onClose: function () {
-						if (!cordova || !cordova.plugins || !cordova.plugins.Keyboard) {
+						if (typeof cordova === 'undefined' || !cordova.plugins || !cordova.plugins.Keyboard) {
 							return;
 						}
 
@@ -85,7 +85,7 @@ angular.module('angular-datepicker', [])
 	                    });
 	                },
 	                onClose: function () {
-						if (!cordova || !cordova.plugins || !cordova.plugins.Keyboard) {
+						if (typeof cordova ==='undefined' || !cordova.plugins || !cordova.plugins.Keyboard) {
 							return;
 						}
 						
