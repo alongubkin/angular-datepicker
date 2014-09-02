@@ -30,3 +30,29 @@ To create a date or time picker, add the `pick-a-date` or `pick-a-time` directiv
 <input type="text" pick-a-date="date" placeholder="Select Date" /> {{ date }}
 <input type="text" pick-a-time="time" placeholder="Select Time" /> {{ time }}
 ```
+
+You can also provide an options object to the directive which will be passed
+into the `pickadate` or `pickatime` constructor.
+
+```javascript
+// somewhere in your controller
+$scope.options = {
+  format: 'yyyy-mm-dd', // ISO formatted date
+  onClose: function(e) {
+    // do something when the picker closes   
+  }
+}
+```
+
+```HTML
+<input type="text" pick-a-date="date" pick-a-date-options="options" /> {{ date }}
+<input type="text" pick-a-time="time" pick-a-time-options="options" /> {{ time }}
+```
+
+If you don't need to provide any callbacks (like `onClose`) you can specify the
+options object as an angular expression:
+
+```HTML
+<input type="text" pick-a-date="date" pick-a-date-options="{ format: 'yyyy-mm-dd' }" />
+```
+
