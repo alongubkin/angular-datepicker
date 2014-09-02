@@ -56,3 +56,6 @@ options object as an angular expression:
 <input type="text" pick-a-date="date" pick-a-date-options="{ format: 'yyyy-mm-dd' }" />
 ```
 
+For a full list of available options please refer to the pickadate documentation
+for (datepicker options)[http://amsul.ca/pickadate.js/date.htm] and 
+(timepicker options)[http://amsul.ca/pickadate.js/time.htm].
