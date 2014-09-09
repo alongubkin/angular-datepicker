@@ -1,6 +1,6 @@
 {
   "name": "angular-native-datepicker",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "main": [
   	"./build/themes/default.css",
   	"./build/themes/default.date.css",
