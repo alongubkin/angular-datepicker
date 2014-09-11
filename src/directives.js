@@ -59,11 +59,10 @@ angular.module('angular-datepicker', [])
                     }, 500);
                 }
 
-	            element.pickadate(angular.extend(options, {
+	            element.pickadate(angular.extend({
 	                onSet: onSet,
-	                onClose: onClose,
-					container: document.body
-	            }));
+	                onClose: onClose
+	            }, options));
 
 				setTimeout(function() {
 					if (scope.pickADate) {
@@ -116,24 +115,23 @@ angular.module('angular-datepicker', [])
                     if (typeof cordova ==='undefined' || !cordova.plugins || !cordova.plugins.Keyboard) {
                         return;
                     }
-                    
+
                     var keyboardShowCallback = function () {
                         cordova.plugins.Keyboard.close();
                         window.removeEventListener('native.keyboardshow', this);
                     };
 
                     window.addEventListener('native.keyboardshow', keyboardShowCallback);
-                    
+
                     setTimeout(function () {
                         window.removeEventListener('native.keyboardshow', keyboardShowCallback);
                     }, 500);
                 }
 
-	            element.pickatime(angular.extend(options, {
+	            element.pickatime(angular.extend({
 	                onSet: onSet,
-	                onClose: onClose,
-					container: document.body
-	            }));
+	                onClose: onClose
+	            }, options));
 
 				setTimeout(function() {
 					if (scope.pickATime) {
@@ -142,4 +140,4 @@ angular.module('angular-datepicker', [])
 				}, 1000);
 	        }
 	    };
-	});	
+	});
