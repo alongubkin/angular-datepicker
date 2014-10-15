@@ -91,6 +91,10 @@ module.exports = function( grunt ) {
             pickers: {
                 src: [ '<%= dirs.min.pickers %>/picker.js', '<%= dirs.min.pickers %>/picker.js', '<%= dirs.min.pickers %>/picker.date.js', '<%= dirs.min.pickers %>/picker.time.js', '<%= dirs.min.pickers %>/legacy.js', '<%= dirs.min.pickers %>/directives.js'],
                 dest: '<%= dirs.min.pickers %>/angular-datepicker.js'
+            },
+            devPickers: {
+                src: [ 'src/picker.js', 'src/picker.date.js', 'src/picker.time.js', 'src/legacy.js', 'src/directives.js'],
+                dest: '<%= dirs.min.pickers %>/angular-datepicker.js'
             }
         },
 
@@ -120,14 +124,14 @@ module.exports = function( grunt ) {
         },
         clean: {
             pickers: [ '<%= dirs.min.pickers %>/*.js', '!<%= dirs.min.pickers %>/angular-datepicker.js' ],
-        },		
-		
+        },
+
     }) //grunt.initConfig
 
 
     // Register the tasks.
     grunt.registerTask( 'picker', [ 'less:themes', 'uglify:pickers', 'cssmin:pickers', 'uglify:pickers', 'concat:pickers', 'clean:pickers' ] )
-	
+    grunt.registerTask( 'dev', [ 'less:themes', 'cssmin:pickers', 'concat:devPickers', 'clean:pickers' ] )
 } //module.exports
 
 
