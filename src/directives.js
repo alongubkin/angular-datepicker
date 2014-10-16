@@ -57,17 +57,15 @@ angular.module('angular-datepicker', [])
                         window.removeEventListener('native.keyboardshow', keyboardShowCallback);
                     }, 500);
                 }
+                
+                if (scope.pickADate) {
+                    element.attr('data-value', scope.pickADate)
+                }
 
                 element.pickadate(angular.extend({
                     onSet: onSet,
                     onClose: onClose
                 }, options));
-
-                setTimeout(function () {
-                    if (scope.pickADate) {
-                        element.pickadate('picker').set('select', scope.pickADate);
-                    }
-                }, 1000);
             }
         };
     })
