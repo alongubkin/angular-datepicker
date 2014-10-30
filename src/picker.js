@@ -110,8 +110,12 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
 
                 // Insert the root as specified in the settings.
-                if ( SETTINGS.container ) angular.element( SETTINGS.container ).append( P.$root )
-                else $ELEMENT.after( P.$root )
+                if ( SETTINGS.container ) {
+                  angular.element( SETTINGS.container ).append( P.$root )
+                } 
+                else {
+                  $ELEMENT.after( P.$root )
+                }
 
 
                 // Bind the default component and settings events.
