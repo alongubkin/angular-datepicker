@@ -1197,7 +1197,8 @@ DatePicker.prototype.nodes = function( isOpen ) {
     _.node(
         'div',
         _.node( 'button', settings.today, settings.klass.buttonToday, 'type=button data-pick=' + nowObject.pick + ( isOpen ? '' : ' disabled' ) ) +
-        _.node( 'button', settings.clear, settings.klass.buttonClear, 'type=button data-clear=1' + ( isOpen ? '' : ' disabled' ) ),
+        _.node( 'button', settings.clear, settings.klass.buttonClear, 'type=button data-clear=1' + ( isOpen ? '' : ' disabled' ) ) +
+        _.node( 'button', settings.close, settings.klass.buttonClose, 'type=button data-close=true ' + ( isOpen ? '' : ' disabled' ) ),
         settings.klass.footer
     ) //endreturn
 } //DatePicker.prototype.nodes
@@ -1221,6 +1222,7 @@ DatePicker.defaults = (function( prefix ) {
         // Today and clear
         today: 'Today',
         clear: 'Clear',
+        close: 'Close',
 
         // The format to show on the `input` element
         format: 'd mmmm, yyyy',
@@ -1255,6 +1257,7 @@ DatePicker.defaults = (function( prefix ) {
             footer: prefix + 'footer',
 
             buttonClear: prefix + 'button--clear',
+            buttonClose: prefix + 'button--close',
             buttonToday: prefix + 'button--today'
         }
     }
