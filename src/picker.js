@@ -623,7 +623,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 				//   prevent cases where focus is shifted onto external elements
 				//   when using things like jQuery mobile or MagnificPopup (ref: #249 & #120).
 				//   Also, for Firefox, don’t prevent action on the `option` element.
-				if ( event.type == 'mousedown' && angular.element( target )[0].tagName !== 'input' && target.nodeName != 'OPTION' ) {
+				if ( event.type == 'mousedown' && angular.element( target )[0].tagName !== 'input' && target.nodeName != 'SELECT' && target.nodeName != 'OPTION' ) {
 
 					event.preventDefault()
 
@@ -631,6 +631,8 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 					// from elements focused within the picker.
 					ELEMENT.focus()
 				}
+			} else if ( event.type == 'click' && P.get('open') ) {
+				P.close();
 			}
 		});
 
