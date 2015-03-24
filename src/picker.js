@@ -156,6 +156,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 if ( entireComponent ) P.$root.html( createWrappedComponent() )
                 else angular.element(P.$root[0].querySelectorAll( '.' + CLASSES.box )).html( P.component.nodes( STATE.open ) )
 
+                P.attachLiveEvents();
                 // Trigger the queued “render” events.
                 return P.trigger( 'render' )
             }, //render
@@ -229,7 +230,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                     $ELEMENT.triggerHandler( 'focus' )
 
                     // Bind the document events.
-					angular.element(document.querySelectorAll('#' + STATE.id)).on('click focusin', function( event ) {
+					angular.element(document.querySelectorAll('#' + STATE.id)).off('click focusin').on('click focusin', function( event ) {
                         var target = event.target;
 
                         // If the target of the event is not the element, close the picker picker.
@@ -248,8 +249,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
                     });
 					
-					angular.element(document.querySelectorAll('#' + STATE.id)).on( 'keydown', function( event ) {
-
+					angular.element(document.querySelectorAll('#' + STATE.id)).off('keydown').on('keydown', function( event ) {
                         var
                             // Get the keycode.
                             keycode = event.keyCode,
@@ -636,9 +636,9 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 			}
 		});
 
-        function attachLiveEvents() {
+        P.attachLiveEvents = function() {
             // If there’s a click on an actionable element, carry out the actions.
-            angular.element(P.$root[0].querySelectorAll('[data-pick], [data-nav], [data-clear], [data-close]')).on('click', function() {
+            angular.element(P.$root[0].querySelectorAll('[data-pick], [data-nav], [data-clear], [data-close]')).off('click').on('click', function() {
                 var $target = angular.element( this ),
                     targetDisabled = $target.hasClass( CLASSES.navDisabled ) || $target.hasClass( CLASSES.disabled ),
 
@@ -655,31 +655,29 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 // If something is superficially changed, update the `highlight` based on the `nav`.
                 if ( $target.attr('data-nav') && !targetDisabled ) {
                     P.set( 'highlight', P.component.item.highlight, { nav: parseInt($target.attr('data-nav')) } )
-                    attachLiveEvents();
+                    P.attachLiveEvents();
                 }
 
                 // If something is picked, set `select` then close with focus.
                 else if ( PickerConstructor._.isInteger( parseInt($target.attr('data-pick')) ) && !targetDisabled ) {
                     P.set( 'select', parseInt($target.attr('data-pick')) ).close( true )
-                    attachLiveEvents();
+                    P.attachLiveEvents();
                 }
 
                 // If a “clear” button is pressed, empty the values and close with focus.
                 else if ( $target.attr('data-clear') ) {
                     P.clear().close( true )
-                    attachLiveEvents();
+                    P.attachLiveEvents();
                 }
 
                 // If a "close" button is pressed, close with focus.
                 else if ( $target.attr('data-close') ) {
                     P.close( true );
-                    attachLiveEvents();
+                    P.attachLiveEvents();
                 }
 
             });
         }
-		
-		attachLiveEvents();
 		
         aria( P.$root[0], 'hidden', true )
     }
