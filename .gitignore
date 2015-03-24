@@ -5,6 +5,8 @@
 
 *.sublime-workspace
 
+.idea
+
 node_modules/*
 
 bower_components/*

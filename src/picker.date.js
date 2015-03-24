@@ -92,12 +92,15 @@ function DatePicker( picker, settings ) {
         37: function() { return isRTL() ? 1 : -1 }, // Left
         go: function( timeChange ) {
             var highlightedObject = calendar.item.highlight,
-                targetDate = new Date( highlightedObject.year, highlightedObject.month, highlightedObject.date + timeChange )
-            calendar.set(
-                'highlight',
-                [ targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate() ],
-                { interval: timeChange }
-            )
+                targetDate = new Date( highlightedObject.year, highlightedObject.month, highlightedObject.date + timeChange),
+                dateObj = calendar.create([targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate()])
+            calendar
+                .set('select', dateObj)
+                .set(
+                    'highlight',
+                    dateObj,
+                    { interval: timeChange }
+                )
             this.render()
         }
     }
