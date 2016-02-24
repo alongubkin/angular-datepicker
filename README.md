@@ -19,6 +19,16 @@ Include `build/angular-datepicker.js` in your application:
 ```HTML
 <script src="angular-datepicker.js"></script>
 ```
+
+Include CSS files in your application:
+
+```HTML
+<link rel="stylesheet" href="build/themes/default.css"/>
+<link rel="stylesheet" href="build/themes/default.date.css"/>
+<link rel="stylesheet" href="build/themes/default.time.css"/>
+```
+
+Note: for usage within a modal the default (not classic) CSS files are recommended.
     
 Add the module `angular-datepicker` as a dependency to your app module:
 
