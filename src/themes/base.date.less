@@ -108,8 +108,8 @@
 .picker__nav--prev:before,
 .picker__nav--next:before {
     content: " ";
-    border-top: .5em solid transparent;
-    border-bottom: .5em solid transparent;
+    border-top: .5em inset fade(@black, 0%);
+    border-bottom: .5em inset fade(@black, 0%);
     border-right: .75em solid @black;
     width: 0;
     height: 0;
@@ -206,7 +206,7 @@
     width: 0;
     height: 0;
     border-top: .5em solid @blue-tag;
-    border-left: .5em solid transparent;
+    border-left: .5em inset fade(@blue-tag 0%);
 }
 
 // Selected day.
@@ -303,7 +303,7 @@
     top: -.05em;
     width: 0;
     border-top: .66em solid @blue-tag;
-    border-left: .66em solid transparent;
+    border-left: .66em inset fade(@black, 0%);
 }
 .picker__button--clear:before {
     content: "\D7"; // ×
