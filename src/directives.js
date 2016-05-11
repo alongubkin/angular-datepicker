@@ -126,70 +126,99 @@ angular.module('angular-datepicker', [])
                 pickATimeOptions: '='        
             },
             link: function(scope, element, attrs) {
-                var options = scope.pickATimeOptions || {};
 
-                var userOnSet = options.onSet;
+                var options = {};
 
-                function onSet(e) {
-                    if (typeof userOnSet === 'function') {
-                        userOnSet.apply(this, arguments);
+                function initPickATime(){
+
+                    options = scope.pickATimeOptions ? angular.copy(scope.pickATimeOptions) : {};
+
+                    var userOnSet = options.onSet;
+
+                    function onSet(e) {
+                        if (typeof userOnSet === 'function') {
+                            userOnSet.apply(this, arguments);
+                        }
+
+                        if (scope.$$phase || scope.$root.$$phase) // we are coming from $watch or link setup
+                            return;                    
+                        var select = element.pickatime('picker').get('select'); // selected date
+
+                        if (select) {
+                            scope.$apply(function() {                        
+                                if (e.hasOwnProperty('clear')) {                            
+                                    scope.pickATime = null;                            
+                                    return;                        
+                                }                        
+                                if (!scope.pickATime || typeof scope.pickATime === 'string') {
+                                    scope.pickATime = new Date();
+                                }
+                                scope.pickATime.setHours(select.hour);                        
+                                scope.pickATime.setMinutes(select.mins);                        
+                                scope.pickATime.setSeconds(0);                        
+                                scope.pickATime.setMilliseconds(0);                    
+                            });
+                        }
                     }
 
-                    if (scope.$$phase || scope.$root.$$phase) // we are coming from $watch or link setup
-                        return;                    
-                    var select = element.pickatime('picker').get('select'); // selected date
+                    var userOnClose = options.onClose;
 
-                    if (select) {
-                        scope.$apply(function() {                        
-                            if (e.hasOwnProperty('clear')) {                            
-                                scope.pickATime = null;                            
-                                return;                        
-                            }                        
-                            if (!scope.pickATime || typeof scope.pickATime === 'string') {
-                                scope.pickATime = new Date();
-                            }
-                            scope.pickATime.setHours(select.hour);                        
-                            scope.pickATime.setMinutes(select.mins);                        
-                            scope.pickATime.setSeconds(0);                        
-                            scope.pickATime.setMilliseconds(0);                    
-                        });
-                    }
-                }
+                    function onClose(e) {
+                        if (typeof userOnClose === 'function') {
+                            userOnClose.apply(this, arguments);
+                        }
 
-                var userOnClose = options.onClose;
+                        if (typeof cordova === 'undefined' || !cordova.plugins || !cordova.plugins.Keyboard) {
+                            return;
+                        }
 
-                function onClose(e) {
-                    if (typeof userOnClose === 'function') {
-                        userOnClose.apply(this, arguments);
+                        var keyboardShowCallback = function() {
+                            cordova.plugins.Keyboard.close();
+                            window.removeEventListener('native.keyboardshow', this);
+                        };
+
+                        window.addEventListener('native.keyboardshow', keyboardShowCallback);
+
+                        setTimeout(function() {
+                            window.removeEventListener('native.keyboardshow', keyboardShowCallback);
+                        }, 500);
                     }
 
-                    if (typeof cordova === 'undefined' || !cordova.plugins || !cordova.plugins.Keyboard) {
-                        return;
-                    }
 
-                    var keyboardShowCallback = function() {
-                        cordova.plugins.Keyboard.close();
-                        window.removeEventListener('native.keyboardshow', this);
-                    };
 
-                    window.addEventListener('native.keyboardshow', keyboardShowCallback);
+                    element.pickatime(angular.extend(options, {                
+                        onSet: onSet,
+                        onClose: onClose,
+                        container: document.body            
+                    }));
 
                     setTimeout(function() {
-                        window.removeEventListener('native.keyboardshow', keyboardShowCallback);
-                    }, 500);
+                        if (scope.pickATime) {
+                            element.pickatime('picker').set('select', scope.pickATime);
+                        }
+                    }, 0);      
+
+
                 }
 
-                element.pickatime(angular.extend(options, {                
-                    onSet: onSet,
-                    onClose: onClose,
-                    container: document.body            
-                }));
+                var list = '';
+                for (var i in optionsList) {
+                    list += !list ? 'pickATimeOptions.' + optionsList[i] : ' + pickATimeOptions.' + optionsList[i];
+                }  
 
-                setTimeout(function() {
-                    if (scope.pickATime) {
-                        element.pickatime('picker').set('select', scope.pickATime);
+
+                function reinitPickATime() {
+                    initPickATime();
+                    if (element.pickatime('picker')) {
+                        element.pickatime('picker').changeSettings(options);
+
+                        if (scope.pickATime) {
+                            element.pickatime('picker').set('select', scope.pickATime);
+                        }
                     }
-                }, 1000);        
+                }
+
+                scope.$watch(list, reinitPickATime);   
             }    
         };
     });
