@@ -942,7 +942,7 @@ DatePicker.prototype.activate = function( type, datesToEnable ) {
  * Create a string for the nodes in the picker.
  */
 DatePicker.prototype.nodes = function( isOpen ) {
-	
+
     var
         calendar = this,
         settings = calendar.settings,
