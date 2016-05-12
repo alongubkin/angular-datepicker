@@ -113,6 +113,8 @@ function DatePicker( picker, settings ) {
                 var value = this.value
                 if ( value ) {
                     picker.set( 'highlight', [ picker.get( 'view' ).year, value, picker.get( 'highlight' ).date ] )
+
+                    //picker.set( 'highlight', {year: picker.get( 'view' ).year, month: value,date: picker.get( 'highlight' ).date } )
                     angular.element(picker.$root[0].querySelectorAll( '.' + settings.klass.selectMonth )).triggerHandler( 'focus' )
                 }
             })
@@ -120,6 +122,7 @@ function DatePicker( picker, settings ) {
                 var value = this.value
                 if ( value ) {
                     picker.set( 'highlight', [ value, picker.get( 'view' ).month, picker.get( 'highlight' ).date ] )
+                    //picker.set( 'highlight', {year: value, month: picker.get( 'view' ).month,date: picker.get( 'highlight' ).date } )
                     angular.element(picker.$root[0].querySelectorAll( '.' + settings.klass.selectYear )).triggerHandler( 'focus' )
                 }
             })
@@ -327,15 +330,15 @@ DatePicker.prototype.navigate = function( type, value, options ) {
 
     if ( isTargetArray || isTargetObject ) {
 
-        if ( isTargetObject ) {
+        if ( isTargetArray ) {
+            targetYear = value[0]
+            targetMonth = value[1]
+            targetDate = value[2]
+        }
+        else {
             targetYear = value.year
             targetMonth = value.month
             targetDate = value.date
-        }
-        else {
-            targetYear = +value[0]
-            targetMonth = +value[1]
-            targetDate = +value[2]
         }
 
         // If we’re navigating months but the view is in a different
