@@ -1,7 +1,5 @@
 // mostly taken from http://www.codinginsight.com/angularjs-and-pickadate/
 
-var optionsList = ['onSet', 'onOpen', 'onClose', 'format'];
-
 angular.module('angular-datepicker', [])
     .directive('pickADate', function() {    
         return {        
@@ -93,11 +91,15 @@ angular.module('angular-datepicker', [])
 
                     scope.pickADateOptions.container = document.body;
 
+
+                    console.log(element.pickadate('picker'));
                 }
 
                 var list = '';
-                for (var i in optionsList) {
-                    list += !list ? 'pickADateOptions.' + optionsList[i] : ' + pickADateOptions.' + optionsList[i];
+                for (var i in scope.pickADateOptions) {
+                    if (i != 'container') {
+                        list += !list ? 'pickADateOptions.' + i : ' + pickADateOptions.' + i;
+                    }
                 }  
 
 
@@ -161,6 +163,22 @@ angular.module('angular-datepicker', [])
                         }
                     }
 
+
+
+                    var userOnOpen = options.onOpen;
+
+                    function onOpen(e) {
+                        if (typeof userOnOpen === 'function') {
+                            userOnOpen.apply(this, arguments);
+                        }
+
+                        var time = scope.pickATime ? scope.pickATime : element.val();
+
+                        element.pickatime('picker').set('select', time, {
+                            format: options.format
+                        });
+                    }
+
                     var userOnClose = options.onClose;
 
                     function onClose(e) {
@@ -186,7 +204,8 @@ angular.module('angular-datepicker', [])
 
 
 
-                    element.pickatime(angular.extend(options, {                
+                    element.pickatime(angular.extend(options, {    
+                        onOpen: onOpen,            
                         onSet: onSet,
                         onClose: onClose,
                         container: document.body            
@@ -198,14 +217,15 @@ angular.module('angular-datepicker', [])
                         }
                     }, 0);      
 
-
+                    console.log(element.pickatime('picker'));
                 }
 
                 var list = '';
-                for (var i in optionsList) {
-                    list += !list ? 'pickATimeOptions.' + optionsList[i] : ' + pickATimeOptions.' + optionsList[i];
+                for (var i in scope.pickATimeOptions) {
+                    if (i != 'container') {
+                        list += !list ? 'pickATimeOptions.' + i : ' + pickATimeOptions.' + i;
+                    }
                 }  
-
 
                 function reinitPickATime() {
                     initPickATime();
