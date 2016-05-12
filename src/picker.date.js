@@ -346,7 +346,7 @@ DatePicker.prototype.navigate = function( type, value, options ) {
         }
 
         // Figure out the expected target year and month.
-        targetDateObject = new Date( targetYear, targetMonth + ( options && options.nav ? options.nav : 0 ), 1 )
+        targetDateObject = new Date( targetYear, parseInt(targetMonth) + parseInt( options && options.nav ? options.nav : 0 ), 1 )
         targetYear = targetDateObject.getFullYear()
         targetMonth = targetDateObject.getMonth()
 
