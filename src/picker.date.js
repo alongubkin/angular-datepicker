@@ -113,8 +113,6 @@ function DatePicker( picker, settings ) {
                 var value = this.value
                 if ( value ) {
                     picker.set( 'highlight', [ picker.get( 'view' ).year, value, picker.get( 'highlight' ).date ] )
-
-                    //picker.set( 'highlight', {year: picker.get( 'view' ).year, month: value,date: picker.get( 'highlight' ).date } )
                     angular.element(picker.$root[0].querySelectorAll( '.' + settings.klass.selectMonth )).triggerHandler( 'focus' )
                 }
             })
@@ -122,7 +120,6 @@ function DatePicker( picker, settings ) {
                 var value = this.value
                 if ( value ) {
                     picker.set( 'highlight', [ value, picker.get( 'view' ).month, picker.get( 'highlight' ).date ] )
-                    //picker.set( 'highlight', {year: value, month: picker.get( 'view' ).month,date: picker.get( 'highlight' ).date } )
                     angular.element(picker.$root[0].querySelectorAll( '.' + settings.klass.selectYear )).triggerHandler( 'focus' )
                 }
             })
