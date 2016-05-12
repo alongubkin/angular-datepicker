@@ -29,7 +29,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
     if ( !ELEMENT ) return PickerConstructor
 
 	var SETTINGS;
-	
+
 	// Merge the defaults and options passed.
 	if (COMPONENT) {
 		SETTINGS = COMPONENT.defaults;
@@ -37,11 +37,11 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 	} else {
 		SETTINGS = OPTIONS || {};
 	}
-	
+
 	// Merge the default classes with the settings classes.
 	var CLASSES = PickerConstructor.klasses();
 	angular.extend(CLASSES, SETTINGS.klass);
-	
+
 
     var
         // The state of the picker.
@@ -112,7 +112,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 // Insert the root as specified in the settings.
                 if ( SETTINGS.container ) {
                   angular.element( SETTINGS.container ).append( P.$root )
-                } 
+                }
                 else {
                   $ELEMENT.after( P.$root )
                 }
@@ -146,6 +146,11 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 return P.trigger( 'start' ).trigger( 'render' )
             }, //start
 
+            changeSettings: function (options) {
+                angular.extend(SETTINGS, options);
+                this.stop();
+                this.start();
+            },
 
             /**
              * Render a new picker
@@ -248,7 +253,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                         }
 
                     });
-					
+
 					angular.element(document.querySelectorAll('#' + STATE.id)).off('keydown').on('keydown', function( event ) {
                         var
                             // Get the keycode.
@@ -543,7 +548,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
         // Add the “input” class name.
         $ELEMENT.addClass(CLASSES.input)
-		
+
 		// If there’s a `data-value`, update the value of the element.
 		$ELEMENT[0].value = $ELEMENT.attr('data-value') ?
 			P.get('select', SETTINGS.format) :
@@ -552,7 +557,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 		// On focus/click, open the picker and adjust the root “focused” state.
 		angular.element(document.querySelectorAll('#' + STATE.id)).on('focus', focusToOpen);
 		angular.element(document.querySelectorAll('#' + STATE.id)).on('click', focusToOpen);
-		
+
         // Only bind keydown events if the element isn’t editable.
         if ( !SETTINGS.editable ) {
 
@@ -601,17 +606,17 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
      */
     function prepareElementRoot() {
 		// When something within the root is focused, stop from bubbling
-		// to the doc and remove the “focused” state from the root.	
+		// to the doc and remove the “focused” state from the root.
         P.$root.on('focusin', function( event ) {
 			P.$root.removeClass( CLASSES.focused )
 			aria( P.$root[0], 'selected', false )
 			event.stopPropagation()
 		});
-	
+
 		// When something within the root holder is clicked, stop it
         // from bubbling to the doc.
         P.$root.on('mousedown click', function( event ) {
-			
+
 			var target = event.target
 
 			// Make sure the target isn’t the root holder so it can bubble up.
@@ -678,7 +683,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
             });
         }
-		
+
         aria( P.$root[0], 'hidden', true )
     }
 
