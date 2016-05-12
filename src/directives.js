@@ -90,9 +90,6 @@ angular.module('angular-datepicker', [])
                     element.pickadate(options);
 
                     scope.pickADateOptions.container = document.body;
-
-
-                    console.log(element.pickadate('picker'));
                 }
 
                 var list = '';
@@ -217,7 +214,6 @@ angular.module('angular-datepicker', [])
                         }
                     }, 0);      
 
-                    console.log(element.pickatime('picker'));
                 }
 
                 var list = '';
