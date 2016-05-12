@@ -327,15 +327,15 @@ DatePicker.prototype.navigate = function( type, value, options ) {
 
     if ( isTargetArray || isTargetObject ) {
 
-        if ( isTargetObject ) {
+        if ( isTargetArray ) {
+            targetYear = value[0]
+            targetMonth = value[1]
+            targetDate = value[2]
+        }
+        else {
             targetYear = value.year
             targetMonth = value.month
             targetDate = value.date
-        }
-        else {
-            targetYear = +value[0]
-            targetMonth = +value[1]
-            targetDate = +value[2]
         }
 
         // If we’re navigating months but the view is in a different
