@@ -317,7 +317,8 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                     $ELEMENT.off( 'focus.' + STATE.id );
 					$ELEMENT.triggerHandler( 'focus' );
                     setTimeout( function() {
-                        angular.element(document.querySelectorAll('#' + STATE.id)).on( 'focus', focusToOpen )
+                        angular.element(document.querySelectorAll('#' + STATE.id)).off( 'focus', focusToOpen );
+                        angular.element(document.querySelectorAll('#' + STATE.id)).on( 'focus', focusToOpen );
                     }, 0 )
                 }
 
@@ -336,7 +337,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 // Set it as closed.
                 setTimeout(function () {
                     STATE.open = false;
-                }, 1000);
+                }, 0);
 
                 // Unbind the document events.
                 $document.off( '.' + STATE.id )
@@ -555,8 +556,9 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 			ELEMENT.value;
 
 		// On focus/click, open the picker and adjust the root “focused” state.
+
+        angular.element(document.querySelectorAll('#' + STATE.id)).off( 'focus', focusToOpen );
 		angular.element(document.querySelectorAll('#' + STATE.id)).on('focus', focusToOpen);
-		angular.element(document.querySelectorAll('#' + STATE.id)).on('click', focusToOpen);
 
         // Only bind keydown events if the element isn’t editable.
         if ( !SETTINGS.editable ) {
@@ -654,7 +656,14 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
                 // If it’s disabled or nothing inside is actively focused, re-focus the element.
                 if ( targetDisabled || activeElement && !P.$root[0].contains(activeElement) ) {
-                    ELEMENT.focus()
+                    ELEMENT.focus();
+                    angular.element(ELEMENT).on( 'click', focusToOpen);
+                    var unClick = function(){
+                        angular.element(ELEMENT).off( 'click', focusToOpen);
+                        angular.element(ELEMENT).off( 'blur', unClick);
+                    }
+                    angular.element(ELEMENT).off( 'blur', unClick);
+                    angular.element(ELEMENT).on( 'blur', unClick);
                 }
 
                 // If something is superficially changed, update the `highlight` based on the `nav`.
