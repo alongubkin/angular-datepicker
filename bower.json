@@ -13,5 +13,11 @@
   ],
   "dependencies": {
     "angular": "latest"
-  }
+  },
+  "main": [
+    "build/themes/default.css",
+    "build/themes/default.date.css",
+    "build/themes/default.time.css",
+    "build/angular-datepicker.js"
+  ]
 }
